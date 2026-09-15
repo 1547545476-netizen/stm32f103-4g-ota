@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Boot: Build",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/tools/vscode/keil-build.ps1", "-Mode", "build"],
+      "group": {"kind": "build", "isDefault": true},
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Boot: Rebuild",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/tools/vscode/keil-build.ps1", "-Mode", "rebuild"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "APP: Build BIN",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/tools/vscode/keil-app-build.ps1", "-Mode", "rebuild"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "APP: Serial Install",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/tools/vscode/app-serial-ota.ps1", "-Port", "${input:otaPort}"],
+      "dependsOn": "APP: Build BIN",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [{"id": "otaPort", "type": "promptString", "description": "USB serial port", "default": "auto"}]
+}

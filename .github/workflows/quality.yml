@@ -1,0 +1,26 @@
+name: quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile Python tools
+        run: python -m compileall -q tools
+      - name: Check memory layout and secret isolation
+        run: python tools/ci/check_project.py --source-only
+      - name: Check firmware authentication vectors
+        run: python tools/ci/test_firmware_auth.py
+      - name: Check public source and credential rules
+        run: |
+          python tools/ci/check_public_tree.py --tracked
+          python tools/ci/test_public_tree.py

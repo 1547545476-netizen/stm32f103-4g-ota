@@ -1,0 +1,16 @@
+{
+  "version": 4,
+  "configurations": [{
+    "name": "STM32F103-ARMCC",
+    "compilerPath": "",
+    "cStandard": "c99",
+    "intelliSenseMode": "windows-gcc-arm",
+    "includePath": [
+      "${workspaceFolder}/Start", "${workspaceFolder}/Library",
+      "${workspaceFolder}/User", "${workspaceFolder}/Hardware",
+      "${workspaceFolder}/System", "${env:KEIL_ROOT}/ARM/ARMCC/include"
+    ],
+    "defines": ["STM32F10X_MD", "USE_STDPERIPH_DRIVER", "__MICROLIB",
+      "__GNUC__=4", "__GNUC_MINOR__=8", "__GNUC_PATCHLEVEL__=3"]
+  }]
+}
